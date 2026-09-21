@@ -1,0 +1,93 @@
+﻿@page
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Facebook Graph API Explorer";
+}
+
+<div class="container mt-4">
+
+    <h2>Facebook Graph API Explorer</h2>
+    <p class="text-muted">
+        Enter your Page information and query the Facebook Graph API.
+    </p>
+
+    <form method="post">
+
+        <div class="mb-3">
+            <label asp-for="GraphVersion" class="form-label">
+                Graph API Version
+            </label>
+            <input asp-for="GraphVersion"
+                   class="form-control"
+                   placeholder="vXX.X" />
+            <small class="text-muted">
+                Example: vXX.X — use the current version shown in Meta's documentation.
+            </small>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="PageId" class="form-label">
+                Facebook Page ID
+            </label>
+            <input asp-for="PageId"
+                   class="form-control"
+                   placeholder="123456789012345" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="PageAccessToken" class="form-label">
+                Page Access Token
+            </label>
+
+            <input asp-for="PageAccessToken"
+                   type="password"
+                   class="form-control"
+                   placeholder="EAAB..." />
+
+            <small class="text-danger">
+                Never expose this token to JavaScript or commit it to Git.
+            </small>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Fields" class="form-label">
+                Fields
+            </label>
+
+            <input asp-for="Fields"
+                   class="form-control"
+                   value="id,name" />
+
+            <small class="text-muted">
+                Example: id,name,about,link
+            </small>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Get Page Data
+        </button>
+
+    </form>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger mt-4">
+            <strong>Error:</strong>
+            <pre class="mb-0">@Model.ErrorMessage</pre>
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.Result))
+    {
+        <div class="mt-4">
+
+            <h4>Graph API Response</h4>
+
+            <pre class="bg-dark text-light p-3 rounded"
+                 style="white-space: pre-wrap; overflow-x: auto;">@Model.Result</pre>
+
+        </div>
+    }
+
+</div>
